@@ -10,6 +10,7 @@ const listaCards = document.getElementById("lista-cards");
 
 const mensagemInicial = "Digite seu nome, peso e altura.";
 
+// Lista com todos os cadastros (o mais recente fica no início)
 const cadastros = [];
 
 function classificar(imc) {
@@ -21,6 +22,7 @@ function classificar(imc) {
   return "Obesidade grau III";
 }
 
+// Remove acentos e ignora maiúsculas/minúsculas na pesquisa
 function normalizar(texto) {
   return texto
     .normalize("NFD")
@@ -35,6 +37,16 @@ function media(lista, campo) {
   return soma / lista.length;
 }
 
+// Retorna o cadastro com o maior (ou menor) IMC da lista
+function extremo(lista, maior) {
+  return lista.reduce(function (atual, item) {
+    if (maior) {
+      return item.imc > atual.imc ? item : atual;
+    }
+    return item.imc < atual.imc ? item : atual;
+  });
+}
+
 function criarCard(pessoa) {
   const card = document.createElement("div");
   card.className = "card";
@@ -47,7 +59,7 @@ function criarCard(pessoa) {
     "Peso: " + pessoa.peso + " kg",
     "Altura: " + pessoa.altura + " m",
     "IMC: " + pessoa.imc.toFixed(2),
-    "Classificação: " + pessoa.classificacao,
+    "Classificação: " + pessoa.classificacao
   ];
 
   linhas.forEach(function (texto) {
@@ -79,16 +91,20 @@ function renderizar() {
     return;
   }
 
+  // Médias dos cadastros exibidos (todos, ou só os da pesquisa)
   const titulo = document.createElement("h3");
   titulo.textContent =
-    "Médias (" +
-    filtrados.length +
-    (filtrados.length === 1 ? " cadastro)" : " cadastros)");
+    "Resumo (" + filtrados.length + (filtrados.length === 1 ? " cadastro)" : " cadastros)");
+
+  const maior = extremo(filtrados, true);
+  const menor = extremo(filtrados, false);
 
   const linhas = [
     "Peso: " + media(filtrados, "peso").toFixed(2) + " kg",
     "Altura: " + media(filtrados, "altura").toFixed(2) + " m",
     "IMC: " + media(filtrados, "imc").toFixed(2),
+    "Maior IMC: " + maior.imc.toFixed(2) + " (" + maior.nome + ")",
+    "Menor IMC: " + menor.imc.toFixed(2) + " (" + menor.nome + ")"
   ];
 
   medias.appendChild(titulo);
@@ -120,12 +136,7 @@ formulario.addEventListener("submit", function (event) {
     return;
   }
 
-  if (
-    isNaN(valorPeso) ||
-    isNaN(valorAltura) ||
-    valorPeso <= 0 ||
-    valorAltura <= 0
-  ) {
+  if (isNaN(valorPeso) || isNaN(valorAltura) || valorPeso <= 0 || valorAltura <= 0) {
     resultado.textContent = "Insira valores válidos";
     return;
   }
@@ -134,19 +145,15 @@ formulario.addEventListener("submit", function (event) {
   const classificacao = classificar(imc);
 
   resultado.innerHTML =
-    "O IMC de " +
-    nomePessoa +
-    " é " +
-    imc.toFixed(2) +
-    "<br>Classificação: " +
-    classificacao;
+    "O IMC de " + nomePessoa + " é " + imc.toFixed(2) +
+    "<br>Classificação: " + classificacao;
 
   cadastros.unshift({
     nome: nomePessoa,
     peso: valorPeso,
     altura: valorAltura,
     imc: imc,
-    classificacao: classificacao,
+    classificacao: classificacao
   });
 
   renderizar();
