@@ -1,0 +1,75 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.container {
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#resultado {
+  margin-top: 20px;
+}
+
+.card {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+}
+
+.card p {
+  margin: 4px 0;
+}
+
+#pesquisa {
+  margin-bottom: 5px;
+}
+
+#medias {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#medias h3 {
+  margin: 0 0 8px;
+}
+
+#medias p {
+  margin: 4px 0;
+}
