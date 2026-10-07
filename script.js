@@ -10,7 +10,7 @@ const listaCards = document.getElementById("lista-cards");
 
 const mensagemInicial = "Digite seu nome, peso e altura.";
 
-// Lista com todos os cadastros (o mais recente fica no início)
+
 const cadastros = [];
 
 function classificar(imc) {
@@ -22,7 +22,7 @@ function classificar(imc) {
   return "Obesidade grau III";
 }
 
-// Remove acentos e ignora maiúsculas/minúsculas na pesquisa
+
 function normalizar(texto) {
   return texto
     .normalize("NFD")
@@ -37,7 +37,7 @@ function media(lista, campo) {
   return soma / lista.length;
 }
 
-// Retorna o cadastro com o maior (ou menor) IMC da lista
+
 function extremo(lista, maior) {
   return lista.reduce(function (atual, item) {
     if (maior) {
@@ -91,7 +91,7 @@ function renderizar() {
     return;
   }
 
-  // Médias dos cadastros exibidos (todos, ou só os da pesquisa)
+
   const titulo = document.createElement("h3");
   titulo.textContent =
     "Resumo (" + filtrados.length + (filtrados.length === 1 ? " cadastro)" : " cadastros)");
